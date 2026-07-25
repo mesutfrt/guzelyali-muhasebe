@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasa Özeti - Güzelyalı</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- İkonlar için FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
@@ -29,59 +28,138 @@
             width: 100%;
             max-width: 420px;
             background: #ffffff;
-            border-radius: 24px;
-            border: 2px solid #003399;
-            box-shadow: 0 10px 30px rgba(0, 51, 153, 0.1);
+            border-radius: 28px;
+            border: 2px solid #0c1a30;
+            box-shadow: 0 15px 35px rgba(12, 26, 48, 0.12);
             overflow: hidden;
             padding-bottom: 20px;
+            position: relative;
         }
 
-        /* Mavi Başlık Kutusu */
-        .header {
-            background-color: #003399;
-            color: #ffffff;
+        /* Üst Header Kısmı */
+        .header-wrapper {
+            position: relative;
+            background: linear-gradient(180deg, #050d1a 0%, #0d213a 100%);
+            padding: 24px 15px 65px 15px;
             text-align: center;
-            padding: 16px 10px;
-            font-size: 1.8rem;
-            font-weight: 900;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* Geometrik İslam Deseni Arka Planı */
+        .header-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.25) 1.2px, transparent 0);
+            background-size: 14px 14px;
+            opacity: 0.4;
+        }
+
+        /* Cami & Şehir Silüeti SVG */
+        .city-silhouettes {
+            position: absolute;
+            bottom: 22px;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            z-index: 1;
+            opacity: 0.22;
+            pointer-events: none;
+            filter: drop-shadow(0px -2px 6px rgba(212, 175, 55, 0.3));
+        }
+
+        .header-title {
+            font-size: 1.9rem;
+            font-weight: 800;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+        }
+
+        .header-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+            color: #d4af37;
+            font-size: 0.7rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-divider::before, .header-divider::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        /* Alt Kavisli Dalga (Wave) */
+        .header-wave {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            z-index: 3;
+        }
+
+        .header-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 32px;
         }
 
         .content {
-            padding: 16px;
+            padding: 10px 16px 16px 16px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        /* Üstteki Geniş Kartlar (Nakit, Banka, Yekün) */
+        /* Üst Geniş Kart Ortak Stil */
         .wide-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 12px 16px;
+            border-radius: 18px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Sağ Arka Plan Filigran İkonları */
+        .watermark-icon {
+            position: absolute;
+            right: 15px;
+            font-size: 3.5rem;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 1;
         }
 
         .icon-box {
-            width: 52px;
-            height: 52px;
-            background-color: #f8fafc;
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            color: #003399;
-            flex-shrink: 0;
-            border: 1px solid #edf2f7;
-        }
-
-        .icon-box.green-icon {
-            color: #10b981; /* Yekün simgesi yeşil */
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .card-info {
@@ -90,46 +168,62 @@
         }
 
         .card-label {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            color: #1e293b;
+            color: #334155;
             margin-bottom: 2px;
         }
 
         .card-amount {
             font-size: 1.35rem;
             font-weight: 800;
-            color: #003399;
         }
 
         .currency {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            color: #1e293b;
+            color: #475569;
             margin-left: 4px;
         }
 
-        /* Ayraç Çizgisi */
+        /* 1. Nakit Kasa */
+        .card-nakit {
+            background: linear-gradient(135deg, #eef5ff 0%, #e0edff 100%);
+        }
+        .card-nakit .icon-box { background: #ffffff; color: #1d4ed8; }
+        .card-nakit .card-amount { color: #1d4ed8; }
+
+        /* 2. Banka */
+        .card-banka {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+        .card-banka .icon-box { background: #ffffff; color: #047857; }
+        .card-banka .card-amount { color: #047857; }
+
+        /* 3. Yekün */
+        .card-yekun {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+        .card-yekun .icon-box { background: #ffffff; color: #b45309; }
+        .card-yekun .card-amount { color: #b45309; }
+
+        /* Ayraç Süsü */
         .divider {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 4px 0;
-            color: #94a3b8;
-            font-size: 0.8rem;
+            margin: 2px 0;
+            color: #cbd5e1;
+            font-size: 0.75rem;
         }
-
         .divider::before, .divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px dashed #cbd5e1;
+            border-bottom: 1px solid #e2e8f0;
         }
+        .divider span { padding: 0 10px; color: #94a3b8; }
 
-        .divider span {
-            padding: 0 8px;
-        }
-
-        /* Alt 2'li Izgara Kartlar (POS, Çek, Senet, Alışveriş Çeki) */
+        /* Alt 2'li Izgara */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -138,133 +232,221 @@
 
         .grid-card {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 14px 10px;
+            border: 1px solid #f1f5f9;
+            border-radius: 18px;
+            padding: 14px 12px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
         }
 
+        .grid-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 24px; height: 24px;
+            border-radius: 18px 0 0 0;
+        }
+
+        .grid-card-pos::after { background: #2563eb; }
+        .grid-card-cek::after { background: #0d9488; }
+        .grid-card-senet::after { background: #7c3aed; }
+        .grid-card-alisveris::after { background: #db2777; }
+
         .grid-icon-circle {
-            width: 48px;
-            height: 48px;
-            background-color: #eff6ff;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            color: #003399;
-            margin-bottom: 8px;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .grid-card-pos .grid-icon-circle { background: #eff6ff; color: #2563eb; }
+        .grid-card-cek .grid-icon-circle { background: #ccfbf1; color: #0d9488; }
+        .grid-card-senet .grid-icon-circle { background: #f3e8ff; color: #7c3aed; }
+        .grid-card-alisveris .grid-icon-circle { background: #fce7f3; color: #db2777; }
+
+        .grid-info {
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
         }
 
         .grid-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 800;
             color: #1e293b;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
         }
 
         .grid-amount {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 800;
-            color: #003399;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 4px;
-            width: 100%;
         }
 
-        .loading {
-            opacity: 0.4;
-        }
+        .grid-card-pos .grid-amount { color: #1e40af; }
+        .grid-card-cek .grid-amount { color: #0f766e; }
+        .grid-card-senet .grid-amount { color: #6b21a8; }
+        .grid-card-alisveris .grid-amount { color: #9d174d; }
+
+        .loading { opacity: 0.3; }
     </style>
 </head>
 <body>
 
     <div class="main-card">
-        <!-- Üst Başlık -->
-        <div class="header">GÜZELYALI</div>
+        <!-- Üst Başlık & Cami Silüeti Teması -->
+        <div class="header-wrapper">
+            
+            <!-- Cami & Şehir Silüeti -->
+            <svg class="city-silhouettes" viewBox="0 0 500 100" preserveAspectRatio="none" fill="#ffffff">
+                <!-- Kuşlar -->
+                <path d="M30,20 Q36,12 42,20 Q48,12 54,20 Q48,16 42,22 Q36,16 30,20 Z" opacity="0.9"/>
+                <path d="M65,30 Q70,24 75,30 Q80,24 85,30 Q80,27 75,32 Q70,27 65,30 Z" opacity="0.7"/>
+                
+                <!-- Şehir & Binalar Zemin Cizgisi -->
+                <rect x="0" y="65" width="500" height="35" />
+
+                <!-- Sol Taraf Binalar -->
+                <rect x="10" y="50" width="30" height="15" />
+                <rect x="45" y="40" width="20" height="25" />
+                
+                <!-- Sol Cami & Kubbe -->
+                <path d="M 75 65 A 20 20 0 0 1 115 65 Z" />
+                <rect x="70" y="30" width="6" height="35" />
+                <polygon points="73,15 68,30 78,30" />
+
+                <!-- Orta Binalar -->
+                <rect x="130" y="55" width="40" height="10" />
+                <rect x="180" y="48" width="25" height="17" />
+
+                <!-- Ana Büyük Cami (Sağ-Orta) -->
+                <path d="M 230 65 A 35 35 0 0 1 300 65 Z" />
+                <rect x="220" y="20" width="7" height="45" />
+                <polygon points="223.5,5 218,20 229,20" />
+                <rect x="303" y="20" width="7" height="45" />
+                <polygon points="306.5,5 301,20 312,20" />
+
+                <!-- Sağ Taraf Binalar & Kubbeler -->
+                <path d="M 320 65 A 15 15 0 0 1 350 65 Z" />
+                <rect x="360" y="45" width="35" height="20" />
+                <rect x="405" y="52" width="40" height="13" />
+                <rect x="455" y="42" width="30" height="23" />
+            </svg>
+
+            <div class="header-title">GÜZELYALI</div>
+            <div class="header-divider">
+                <i class="fa-solid fa-diamond"></i>
+            </div>
+            
+            <!-- Altın Detaylı Kavisli Dalga -->
+            <div class="header-wave">
+                <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                    <path d="M0.00,49.98 C150.00,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" fill="#d4af37" opacity="0.35"></path>
+                    <path d="M0.00,49.98 C180.00,130.00 320.00,-30.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" fill="#ffffff"></path>
+                </svg>
+            </div>
+        </div>
 
         <div class="content">
-            <!-- Nakit Kasa -->
-            <div class="wide-card">
-                <div class="icon-box">
-                    <i class="fa-solid fa-vault"></i>
-                </div>
-                <div class="card-info">
-                    <span class="card-label">Nakit Kasa</span>
-                    <div class="card-amount loading" id="nakit">... <span class="currency">TRY</span></div>
-                </div>
-            </div>
-
-            <!-- Banka -->
-            <div class="wide-card">
-                <div class="icon-box">
-                    <i class="fa-solid fa-building-columns"></i>
-                </div>
-                <div class="card-info">
-                    <span class="card-label">Banka</span>
-                    <div class="card-amount loading" id="banka">... <span class="currency">TRY</span></div>
+            <!-- 1. Nakit Kasa -->
+            <div class="wide-card card-nakit">
+                <i class="fa-solid fa-wallet watermark-icon"></i>
+                <div class="card-left">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-label">Nakit Kasa</span>
+                        <div class="card-amount loading" id="nakit">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Yekün -->
-            <div class="wide-card">
-                <div class="icon-box green-icon">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <div class="card-info">
-                    <span class="card-label">Yekün</span>
-                    <div class="card-amount loading" id="yekun">... <span class="currency">TRY</span></div>
+            <!-- 2. Banka -->
+            <div class="wide-card card-banka">
+                <i class="fa-solid fa-landmark watermark-icon"></i>
+                <div class="card-left">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-label">Banka</span>
+                        <div class="card-amount loading" id="banka">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Kesikli Ayraç -->
+            <!-- 3. Yekün -->
+            <div class="wide-card card-yekun">
+                <i class="fa-solid fa-chart-line watermark-icon"></i>
+                <div class="card-left">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-label">Yekün</span>
+                        <div class="card-amount loading" id="yekun">... <span class="currency">TRY</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ayraç -->
             <div class="divider">
                 <span>❖</span>
             </div>
 
-            <!-- 2'li Izgara Kalemler -->
+            <!-- 2'li Izgara -->
             <div class="grid-container">
                 <!-- POS -->
-                <div class="grid-card">
+                <div class="grid-card grid-card-pos">
                     <div class="grid-icon-circle">
                         <i class="fa-solid fa-credit-card"></i>
                     </div>
-                    <span class="grid-title">POS</span>
-                    <div class="grid-amount loading" id="pos">... <span class="currency">TRY</span></div>
+                    <div class="grid-info">
+                        <span class="grid-title">POS</span>
+                        <div class="grid-amount loading" id="pos">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
 
                 <!-- ÇEK -->
-                <div class="grid-card">
+                <div class="grid-card grid-card-cek">
                     <div class="grid-icon-circle">
-                        <i class="fa-solid fa-money-check"></i>
+                        <i class="fa-solid fa-money-check-dollar"></i>
                     </div>
-                    <span class="grid-title">ÇEK</span>
-                    <div class="grid-amount loading" id="cek">... <span class="currency">TRY</span></div>
+                    <div class="grid-info">
+                        <span class="grid-title">ÇEK</span>
+                        <div class="grid-amount loading" id="cek">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
 
                 <!-- SENET -->
-                <div class="grid-card">
+                <div class="grid-card grid-card-senet">
                     <div class="grid-icon-circle">
                         <i class="fa-solid fa-file-signature"></i>
                     </div>
-                    <span class="grid-title">SENET</span>
-                    <div class="grid-amount loading" id="senet">... <span class="currency">TRY</span></div>
+                    <div class="grid-info">
+                        <span class="grid-title">SENET</span>
+                        <div class="grid-amount loading" id="senet">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
 
                 <!-- ALIŞVERİŞ ÇEKİ -->
-                <div class="grid-card">
+                <div class="grid-card grid-card-alisveris">
                     <div class="grid-icon-circle">
                         <i class="fa-solid fa-gift"></i>
                     </div>
-                    <span class="grid-title">ALIŞVERİŞ ÇEKİ</span>
-                    <div class="grid-amount loading" id="alisveris">... <span class="currency">TRY</span></div>
+                    <div class="grid-info">
+                        <span class="grid-title">ALIŞVERİŞ ÇEKİ</span>
+                        <div class="grid-amount loading" id="alisveris">... <span class="currency">TRY</span></div>
+                    </div>
                 </div>
             </div>
         </div>
