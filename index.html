@@ -48,10 +48,8 @@
     </div>
 
     <script>
-        // 2. Adımda aldığın Google Apps Script URL'sini buraya yapıştır:
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeNbSAwrjw4s7MPhWzaozcUZfm7_zchuzu8h9a4TYKWDrwzn_iGWOE33kE6gIs13M/exec";
 
-        // Para formatı dönüştürücü (Örn: 2545.3 -> 2.545,30 TRY)
         function formatTL(val) {
             let num = parseFloat(val) || 0;
             return num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TRY";
@@ -62,7 +60,6 @@
                 let response = await fetch(SCRIPT_URL);
                 let data = await response.json();
 
-                // Değerleri HTML'e yazdır
                 document.getElementById('nakit').innerText = formatTL(data.Nakit);
                 document.getElementById('banka').innerText = formatTL(data.Banka);
                 document.getElementById('pos').innerText = formatTL(data.POS);
@@ -70,7 +67,6 @@
                 document.getElementById('senet').innerText = formatTL(data.Senet);
                 document.getElementById('alisveris').innerText = formatTL(data.AlisverisCeki);
 
-                // Yekün Hesapla
                 let toplam = (parseFloat(data.Nakit) || 0) +
                              (parseFloat(data.Banka) || 0) +
                              (parseFloat(data.POS) || 0) +
@@ -85,7 +81,6 @@
             }
         }
 
-        // Sayfa açıldığında verileri çek
         verileriCek();
     </script>
 </body>
