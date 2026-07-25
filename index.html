@@ -4,47 +4,270 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasa Özeti - Güzelyalı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- İkonlar için FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Tasarımına uygun temel CSS yapısı */
-        body { font-family: sans-serif; background-color: #f4f1ea; margin: 0; padding: 20px; }
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .title { font-weight: bold; color: #333; }
-        .amount { font-size: 1.2em; font-weight: bold; color: #111; }
-        .total-card { background: #e2d3a8; border-radius: 12px; padding: 15px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        /* Dış Çerçeve Kartı */
+        .main-card {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 24px;
+            border: 2px solid #003399;
+            box-shadow: 0 10px 30px rgba(0, 51, 153, 0.1);
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        /* Mavi Başlık Kutusu */
+        .header {
+            background-color: #003399;
+            color: #ffffff;
+            text-align: center;
+            padding: 16px 10px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Üstteki Geniş Kartlar (Nakit, Banka, Yekün) */
+        .wide-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .icon-box {
+            width: 52px;
+            height: 52px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #003399;
+            flex-shrink: 0;
+            border: 1px solid #edf2f7;
+        }
+
+        .icon-box.green-icon {
+            color: #10b981; /* Yekün simgesi yeşil */
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .card-amount {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #003399;
+        }
+
+        .currency {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-left: 4px;
+        }
+
+        /* Ayraç Çizgisi */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px 0;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .divider span {
+            padding: 0 8px;
+        }
+
+        /* Alt 2'li Izgara Kartlar (POS, Çek, Senet, Alışveriş Çeki) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .grid-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .grid-icon-circle {
+            width: 48px;
+            height: 48px;
+            background-color: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #003399;
+            margin-bottom: 8px;
+        }
+
+        .grid-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .grid-amount {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #003399;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 4px;
+            width: 100%;
+        }
+
+        .loading {
+            opacity: 0.4;
+        }
     </style>
 </head>
 <body>
 
-    <h2>KASA ÖZETİ</h2>
+    <div class="main-card">
+        <!-- Üst Başlık -->
+        <div class="header">GÜZELYALI</div>
 
-    <div class="card">
-        <span class="title">Nakit Kasa</span>
-        <span class="amount" id="nakit">Yükleniyor...</span>
-    </div>
-    <div class="card">
-        <span class="title">Banka</span>
-        <span class="amount" id="banka">Yükleniyor...</span>
-    </div>
-    <div class="card">
-        <span class="title">POS</span>
-        <span class="amount" id="pos">Yükleniyor...</span>
-    </div>
-    <div class="card">
-        <span class="title">Çek</span>
-        <span class="amount" id="cek">Yükleniyor...</span>
-    </div>
-    <div class="card">
-        <span class="title">Senet</span>
-        <span class="amount" id="senet">Yükleniyor...</span>
-    </div>
-    <div class="card">
-        <span class="title">Alışveriş Çeki</span>
-        <span class="amount" id="alisveris">Yükleniyor...</span>
-    </div>
+        <div class="content">
+            <!-- Nakit Kasa -->
+            <div class="wide-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-vault"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">Nakit Kasa</span>
+                    <div class="card-amount loading" id="nakit">... <span class="currency">TRY</span></div>
+                </div>
+            </div>
 
-    <div class="total-card">
-        <span class="title" style="color: #6b5210;">Yekün</span>
-        <span class="amount" style="color: #6b5210;" id="yekun">Yükleniyor...</span>
+            <!-- Banka -->
+            <div class="wide-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">Banka</span>
+                    <div class="card-amount loading" id="banka">... <span class="currency">TRY</span></div>
+                </div>
+            </div>
+
+            <!-- Yekün -->
+            <div class="wide-card">
+                <div class="icon-box green-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">Yekün</span>
+                    <div class="card-amount loading" id="yekun">... <span class="currency">TRY</span></div>
+                </div>
+            </div>
+
+            <!-- Kesikli Ayraç -->
+            <div class="divider">
+                <span>❖</span>
+            </div>
+
+            <!-- 2'li Izgara Kalemler -->
+            <div class="grid-container">
+                <!-- POS -->
+                <div class="grid-card">
+                    <div class="grid-icon-circle">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <span class="grid-title">POS</span>
+                    <div class="grid-amount loading" id="pos">... <span class="currency">TRY</span></div>
+                </div>
+
+                <!-- ÇEK -->
+                <div class="grid-card">
+                    <div class="grid-icon-circle">
+                        <i class="fa-solid fa-money-check"></i>
+                    </div>
+                    <span class="grid-title">ÇEK</span>
+                    <div class="grid-amount loading" id="cek">... <span class="currency">TRY</span></div>
+                </div>
+
+                <!-- SENET -->
+                <div class="grid-card">
+                    <div class="grid-icon-circle">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <span class="grid-title">SENET</span>
+                    <div class="grid-amount loading" id="senet">... <span class="currency">TRY</span></div>
+                </div>
+
+                <!-- ALIŞVERİŞ ÇEKİ -->
+                <div class="grid-card">
+                    <div class="grid-icon-circle">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <span class="grid-title">ALIŞVERİŞ ÇEKİ</span>
+                    <div class="grid-amount loading" id="alisveris">... <span class="currency">TRY</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -52,7 +275,11 @@
 
         function formatTL(val) {
             let num = parseFloat(val) || 0;
-            return num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TRY";
+            return num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function removeLoadingClass() {
+            document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
         }
 
         async function verileriCek() {
@@ -60,12 +287,12 @@
                 let response = await fetch(SCRIPT_URL);
                 let data = await response.json();
 
-                document.getElementById('nakit').innerText = formatTL(data.Nakit);
-                document.getElementById('banka').innerText = formatTL(data.Banka);
-                document.getElementById('pos').innerText = formatTL(data.POS);
-                document.getElementById('cek').innerText = formatTL(data.Cek);
-                document.getElementById('senet').innerText = formatTL(data.Senet);
-                document.getElementById('alisveris').innerText = formatTL(data.AlisverisCeki);
+                document.getElementById('nakit').innerHTML = formatTL(data.Nakit) + ' <span class="currency">TRY</span>';
+                document.getElementById('banka').innerHTML = formatTL(data.Banka) + ' <span class="currency">TRY</span>';
+                document.getElementById('pos').innerHTML = formatTL(data.POS) + ' <span class="currency">TRY</span>';
+                document.getElementById('cek').innerHTML = formatTL(data.Cek) + ' <span class="currency">TRY</span>';
+                document.getElementById('senet').innerHTML = formatTL(data.Senet) + ' <span class="currency">TRY</span>';
+                document.getElementById('alisveris').innerHTML = formatTL(data.AlisverisCeki) + ' <span class="currency">TRY</span>';
 
                 let toplam = (parseFloat(data.Nakit) || 0) +
                              (parseFloat(data.Banka) || 0) +
@@ -74,7 +301,8 @@
                              (parseFloat(data.Senet) || 0) +
                              (parseFloat(data.AlisverisCeki) || 0);
 
-                document.getElementById('yekun').innerText = formatTL(toplam);
+                document.getElementById('yekun').innerHTML = formatTL(toplam) + ' <span class="currency">TRY</span>';
+                removeLoadingClass();
 
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
