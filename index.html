@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasa Özeti - Güzelyalı</title>
+    <style>
+        /* Tasarımına uygun temel CSS yapısı */
+        body { font-family: sans-serif; background-color: #f4f1ea; margin: 0; padding: 20px; }
+        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .title { font-weight: bold; color: #333; }
+        .amount { font-size: 1.2em; font-weight: bold; color: #111; }
+        .total-card { background: #e2d3a8; border-radius: 12px; padding: 15px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+
+    <h2>KASA ÖZETİ</h2>
+
+    <div class="card">
+        <span class="title">Nakit Kasa</span>
+        <span class="amount" id="nakit">Yükleniyor...</span>
+    </div>
+    <div class="card">
+        <span class="title">Banka</span>
+        <span class="amount" id="banka">Yükleniyor...</span>
+    </div>
+    <div class="card">
+        <span class="title">POS</span>
+        <span class="amount" id="pos">Yükleniyor...</span>
+    </div>
+    <div class="card">
+        <span class="title">Çek</span>
+        <span class="amount" id="cek">Yükleniyor...</span>
+    </div>
+    <div class="card">
+        <span class="title">Senet</span>
+        <span class="amount" id="senet">Yükleniyor...</span>
+    </div>
+    <div class="card">
+        <span class="title">Alışveriş Çeki</span>
+        <span class="amount" id="alisveris">Yükleniyor...</span>
+    </div>
+
+    <div class="total-card">
+        <span class="title" style="color: #6b5210;">Yekün</span>
+        <span class="amount" style="color: #6b5210;" id="yekun">Yükleniyor...</span>
+    </div>
+
+    <script>
+        // 2. Adımda aldığın Google Apps Script URL'sini buraya yapıştır:
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeNbSAwrjw4s7MPhWzaozcUZfm7_zchuzu8h9a4TYKWDrwzn_iGWOE33kE6gIs13M/exec";
+
+        // Para formatı dönüştürücü (Örn: 2545.3 -> 2.545,30 TRY)
+        function formatTL(val) {
+            let num = parseFloat(val) || 0;
+            return num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TRY";
+        }
+
+        async function verileriCek() {
+            try {
+                let response = await fetch(SCRIPT_URL);
+                let data = await response.json();
+
+                // Değerleri HTML'e yazdır
+                document.getElementById('nakit').innerText = formatTL(data.Nakit);
+                document.getElementById('banka').innerText = formatTL(data.Banka);
+                document.getElementById('pos').innerText = formatTL(data.POS);
+                document.getElementById('cek').innerText = formatTL(data.Cek);
+                document.getElementById('senet').innerText = formatTL(data.Senet);
+                document.getElementById('alisveris').innerText = formatTL(data.AlisverisCeki);
+
+                // Yekün Hesapla
+                let toplam = (parseFloat(data.Nakit) || 0) +
+                             (parseFloat(data.Banka) || 0) +
+                             (parseFloat(data.POS) || 0) +
+                             (parseFloat(data.Cek) || 0) +
+                             (parseFloat(data.Senet) || 0) +
+                             (parseFloat(data.AlisverisCeki) || 0);
+
+                document.getElementById('yekun').innerText = formatTL(toplam);
+
+            } catch (error) {
+                console.error("Veri çekme hatası:", error);
+            }
+        }
+
+        // Sayfa açıldığında verileri çek
+        verileriCek();
+    </script>
+</body>
+</html>
