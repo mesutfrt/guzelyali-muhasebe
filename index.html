@@ -463,13 +463,12 @@
                 let data = await response.json();
 
                 // Esnek kontrol: Hem Türkçe karakterli hem de karaktersiz başlıkları okur
-                let nakitVal = data.Nakit !== undefined ? data.Nakit : (data['Nakit Kasa'] || 0);
-                let bankaVal = data.Banka !== undefined ? data.Banka : 0;
-                let posVal = data.POS !== undefined ? data.POS : 0;
-                let cekVal = data.Cek !== undefined ? data.Cek : (data['Çek'] !== undefined ? data['Çek'] : 0);
-                let senetVal = data.Senet !== undefined ? data.Senet : 0;
-                let alisverisVal = data.AlisverisCeki !== undefined ? data.AlisverisCeki : (data['Alışveriş Çeki'] !== undefined ? data['Alışveriş Çeki'] : 0);
-
+                let nakitVal = getVal(data, 'Nakit', 'Nakit Kasa');
+let bankaVal = getVal(data, 'Banka');
+let posVal = getVal(data, 'POS');
+let cekVal = getVal(data, 'Cek', 'Çek', 'ÇEK');
+let senetVal = getVal(data, 'Senet');
+let alisverisVal = getVal(data, 'AlisverisCeki', 'Alışveriş Çeki', 'ALIŞVERİŞ ÇEKİ');
                 document.getElementById('nakit').innerHTML = formatTL(nakitVal) + ' <span class="currency">TRY</span>';
                 document.getElementById('banka').innerHTML = formatTL(bankaVal) + ' <span class="currency">TRY</span>';
                 document.getElementById('pos').innerHTML = formatTL(posVal) + ' <span class="currency">TRY</span>';
